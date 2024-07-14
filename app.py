@@ -31,7 +31,7 @@ for i, url in enumerate(file_urls):
     download_file(url, f"image_{i}.jpg")
 
 # Load YOLOv5 model (placeholder)
-model_path = "/Users/basilshaji/Desktop/Lung_Nodules_Segmentation/best.pt"  # Path to your YOLOv5 model
+model_path = "best.pt"  # Path to your YOLOv5 model
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # Use GPU if available
 model = attempt_load(model_path, device=device)  # Placeholder for model loading
 model.eval()  # Set the model to evaluation mode
@@ -107,12 +107,12 @@ interface = gr.Interface(
     outputs=output_component,
     title="Lung Nodule Detection [ Segmentation Model ]",
     examples=[
-        "/Users/basilshaji/Desktop/image_1.jpg",
-        "/Users/basilshaji/Desktop/image_2.jpg",
-        "/Users/basilshaji/Desktop/image_3.jpg",
-        "/Users/basilshaji/Desktop/image_4.jpg",
-        "/Users/basilshaji/Desktop/image_5.jpg",
-        "/Users/basilshaji/Desktop/image_6.jpg",
+        "image_1.jpg",
+        "image_2.jpg",
+        "image_3.jpg",
+        "image_4.jpg",
+        "image_5.jpg",
+        "image_6.jpg",
     ],
     description=' "This online deployment proves the effectiveness and efficient function of the machine learning model in identifying lung cancer nodules. The implementation of YOLO for core detection tasks is employed that is an efficient and accurate algorithm for object detection. Through the precise hyper-parameter tuning process, the model proposed in this paper has given an impressive boost in the performance. Moreover, the model uses Retinanet algorithm which is recognized as the powerful tool effective in dense object detection. In an attempt to enhance the model’s performance, the backbone of this architecture consists of a Feature Pyramid Network (FPN). The FPN plays an important role in boosting the model’s capacity in recognizing objects in different scales through the construction of high semantic feature map in different resolutions. In conclusion, this deployment encompasses YOLOv5, hyperparameter optimization, Retinanet, and FPN as one of the most effective and modern solutions for the detection of lung cancer nodules." ~ Basil Shaji 😇',
     live=False,
