@@ -1,4 +1,3 @@
-The repository you provided focuses on lung nodule segmentation, which is a crucial task in medical imaging for detecting and diagnosing lung cancer. Below is a detailed and structured `README.md` file that you can use for your repository.
 
 ```markdown
 # Lung Nodule Segmentation
