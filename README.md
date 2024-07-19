@@ -66,8 +66,8 @@ The dataset used for training and evaluation can be obtained from [LIDC-IDRI](ht
 
 This project implements various deep learning architectures for segmentation, including:
 
-- **U-Net**: A convolutional network designed for biomedical image segmentation.
-- **ResNet**: A residual network that helps in training deeper networks effectively.
+- **RetinaNet**: A residual network that helps in training deeper networks effectively.
+- - **Yolov5**: An object detection algorithm is an algorithm that is capable of detecting certain objects or shapes in a given frame.
 
 Each model is trained on the provided dataset, and hyperparameters can be adjusted in the configuration files.
 
