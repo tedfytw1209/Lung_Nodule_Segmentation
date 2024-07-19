@@ -64,7 +64,7 @@ To run the segmentation model, follow these steps:
 
 ## Dataset
 
-The dataset used for training and evaluation can be obtained from [LUNA16](https://luna16.grand-challenge.org/). Ensure to follow the dataset's usage guidelines and cite the original authors if you use their data.
+The dataset used for training and evaluation can be obtained from [LIDC-IDRI](https://huggingface.co/datasets/basilshaji/Lung_Nodule_Segmentation). Ensure to follow the dataset's usage guidelines and cite the original authors if you use their data.
 
 ## Model Architecture
 
