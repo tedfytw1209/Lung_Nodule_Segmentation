@@ -1,5 +1,3 @@
-
-```markdown
 # Lung Nodule Segmentation
 
 ## Overview
@@ -32,7 +30,6 @@ To set up the project locally, follow these steps:
    ```bash
    git clone https://github.com/myselfbasil/Lung_Nodule_Segmentation.git
    cd Lung_Nodule_Segmentation
-   ```
 
 2. **Install Dependencies**:
    It is recommended to create a virtual environment. You can use `venv` or `conda` for this purpose. Install the required packages using:
