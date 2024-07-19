@@ -90,12 +90,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- [LUNA16](https://luna16.grand-challenge.org/) for providing the dataset.
-- The open-source community for their invaluable contributions to deep learning frameworks.
-
-```
-
-Feel free to modify any sections to better fit your project's specifics or personal preferences. This structured format will help users understand your project and its usage effectively.
-
-Citations:
-[1] https://github.com/myselfbasil/Lung_Nodule_Segmentation.
+Thank you to everyone and every source that contributed to the development of this project, regardless of the size of their contributions. Your support is greatly appreciated.
