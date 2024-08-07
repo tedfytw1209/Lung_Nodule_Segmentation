@@ -80,6 +80,11 @@ The performance of the models can be evaluated using various metrics. Below are 
 
 Visualizations of the segmentation results will be included in the `results` directory after running the evaluation script.
 
+## Deployed Model
+
+The Lung Nodule Segmentation model have been deployed online in huggingface, checck it out:
+https://huggingface.co/spaces/basilshaji/Lung_Nodule_Segmentation
+
 ## Contributing
 
 Contributions are welcome! If you have suggestions for improvements or new features, please fork the repository and submit a pull request. Ensure to follow the coding standards and include relevant tests for new features.
