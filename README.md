@@ -8,7 +8,6 @@ Lung cancer is one of the leading causes of cancer-related deaths worldwide. Ear
 
 - [Features](#features)
 - [Installation](#installation)
-- [Usage](#usage)
 - [Dataset](#dataset)
 - [Model Architecture](#model-architecture)
 - [Results](#results)
