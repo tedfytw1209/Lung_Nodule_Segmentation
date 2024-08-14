@@ -37,27 +37,6 @@ To set up the project locally, follow these steps:
    pip install -r requirements.txt
    ```
 
-## Usage
-
-To run the segmentation model, follow these steps:
-
-1. **Prepare Your Data**: Ensure your CT images are in the correct format and located in the specified directory.
-
-2. **Train the Model**:
-   ```bash
-   python train.py --data_dir <path_to_data> --epochs <number_of_epochs>
-   ```
-
-3. **Evaluate the Model**:
-   ```bash
-   python evaluate.py --model_path <path_to_model>
-   ```
-
-4. **Visualize Results**:
-   ```bash
-   python visualize.py --results_dir <path_to_results>
-   ```
-
 ## Dataset
 
 The dataset used for training and evaluation can be obtained from [LIDC-IDRI](https://huggingface.co/datasets/basilshaji/Lung_Nodule_Segmentation). Ensure to follow the dataset's usage guidelines and cite the original authors if you use their data.
