@@ -30,12 +30,6 @@ To set up the project locally, follow these steps:
    git clone https://github.com/myselfbasil/Lung_Nodule_Segmentation.git
    cd Lung_Nodule_Segmentation
 
-2. **Install Dependencies**:
-   It is recommended to create a virtual environment. You can use `venv` or `conda` for this purpose. Install the required packages using:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
 ## Dataset
 
 The dataset used for training and evaluation can be obtained from [LIDC-IDRI](https://huggingface.co/datasets/basilshaji/Lung_Nodule_Segmentation). Ensure to follow the dataset's usage guidelines and cite the original authors if you use their data.
