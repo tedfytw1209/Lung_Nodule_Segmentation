@@ -60,7 +60,7 @@ Visualizations of the segmentation results will be included in the `results` dir
 
 ## Deployed Model
 
-The Lung Nodule Segmentation model have been deployed online in huggingface, checck it out:
+The Lung Nodule Segmentation model have been deployed online in huggingface, check it out:
 https://huggingface.co/spaces/basilshaji/Lung_Nodule_Segmentation
 
 ## Contributing
