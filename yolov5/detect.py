@@ -68,6 +68,8 @@ from utils.torch_utils import select_device, smart_inference_mode
 
 @smart_inference_mode()
 def run(
+     # Extract pixel spacing values
+    pixel_spacing=[0.626953125, 0.626953125],
     weights=ROOT / "yolov5s.pt",  # model path or triton URL
     source=ROOT / "data/images",  # file/dir/URL/glob/screen/0(webcam)
     data=ROOT / "data/coco128.yaml",  # dataset.yaml path
@@ -104,6 +106,8 @@ def run(
     is_url = source.lower().startswith(("rtsp://", "rtmp://", "http://", "https://"))
     webcam = source.isnumeric() or source.endswith(".streams") or (is_url and not is_file)
     screenshot = source.lower().startswith("screen")
+     # Extract pixel spacing values
+    pixel_spacing_x, pixel_spacing_y = pixel_spacing
     if is_url and is_file:
         source = check_file(source)  # download
 
@@ -166,9 +170,15 @@ def run(
         csv_path = save_dir / "predictions.csv"
 
         # Create or append to the CSV file
-        def write_to_csv(image_name, prediction, confidence):
+        def write_to_csv(image_name, prediction, confidence, width_mm, height_mm):
             """Writes prediction data for an image to a CSV file, appending if the file exists."""
-            data = {"Image Name": image_name, "Prediction": prediction, "Confidence": confidence}
+            data = {
+                "Image Name": image_name,
+                "Prediction": prediction,
+                "Confidence": confidence,
+                "Width (mm)": f"{width_mm:.2f}",
+                "Height (mm)": f"{height_mm:.2f}",
+                }
             with open(csv_path, mode="a", newline="") as f:
                 writer = csv.DictWriter(f, fieldnames=data.keys())
                 if not csv_path.is_file():
@@ -206,20 +216,35 @@ def run(
                     label = names[c] if hide_conf else f"{names[c]}"
                     confidence = float(conf)
                     confidence_str = f"{confidence:.2f}"
+                    
+                    xyxy = [float(x.cpu().numpy()) for x in xyxy]
+                    x1, y1, x2, y2 = xyxy
+                    width_pixels = x2 - x1
+                    height_pixels = y2 - y1
+
+                    # Convert pixel dimensions to millimeters
+                    width_mm = width_pixels * pixel_spacing_x
+                    height_mm = height_pixels * pixel_spacing_y
+
+                    print(f"Bounding Box Size - Width: {width_mm:.2f} mm, Height: {height_mm:.2f} mm")
+                    
 
                     if save_csv:
-                        write_to_csv(p.name, label, confidence_str)
+                        write_to_csv(p.name, label, confidence_str, width_mm, height_mm)
 
                     if save_txt:  # Write to file
                         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
                         line = (cls, *xywh, conf) if save_conf else (cls, *xywh)  # label format
                         with open(f"{txt_path}.txt", "a") as f:
                             f.write(("%g " * len(line)).rstrip() % line + "\n")
-
                     if save_img or save_crop or view_img:  # Add bbox to image
-                        c = int(cls)  # integer class
-                        label = None if hide_labels else (names[c] if hide_conf else f"{names[c]} {conf:.2f}")
+                        if hide_labels:
+                            label = None  # Do not display any label
+                        else:
+                            label = f"W: {width_mm:.2f} mm, H: {height_mm:.2f} mm"
+                              
                         annotator.box_label(xyxy, label, color=colors(c, True))
+      
                     if save_crop:
                         save_one_box(xyxy, imc, file=save_dir / "crops" / names[c] / f"{p.stem}.jpg", BGR=True)
 
@@ -268,7 +293,7 @@ def run(
 def parse_opt():
     """Parses command-line arguments for YOLOv5 detection, setting inference options and model configurations."""
     parser = argparse.ArgumentParser()
-    parser.add_argument("--weights", nargs="+", type=str, default=ROOT / "yolov5s.pt", help="model path or triton URL")
+    parser.add_argument("--weights", nargs="+", type=str, default=ROOT / "best.pt", help="model path or triton URL")
     parser.add_argument("--source", type=str, default=ROOT / "data/images", help="file/dir/URL/glob/screen/0(webcam)")
     parser.add_argument("--data", type=str, default=ROOT / "data/coco128.yaml", help="(optional) dataset.yaml path")
     parser.add_argument("--imgsz", "--img", "--img-size", nargs="+", type=int, default=[640], help="inference size h,w")
@@ -296,6 +321,7 @@ def parse_opt():
     parser.add_argument("--half", action="store_true", help="use FP16 half-precision inference")
     parser.add_argument("--dnn", action="store_true", help="use OpenCV DNN for ONNX inference")
     parser.add_argument("--vid-stride", type=int, default=1, help="video frame-rate stride")
+    parser.add_argument("--pixel-spacing", nargs=2, type=float, default=[0.626953125, 0.626953125], help="Pixel spacing in x and y directions (e.g., --pixel-spacing 0.626953125 0.626953125)",)
     opt = parser.parse_args()
     opt.imgsz *= 2 if len(opt.imgsz) == 1 else 1  # expand
     print_args(vars(opt))
