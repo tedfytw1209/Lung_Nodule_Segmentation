@@ -70,6 +70,7 @@ from utils.torch_utils import select_device, smart_inference_mode
 def run(
      # Extract pixel spacing values
     pixel_spacing=[0.626953125, 0.626953125],
+    imgdir = '',
     weights=ROOT / "yolov5s.pt",  # model path or triton URL
     source=ROOT / "data/images",  # file/dir/URL/glob/screen/0(webcam)
     data=ROOT / "data/coco128.yaml",  # dataset.yaml path
@@ -101,7 +102,7 @@ def run(
 ):
     """Runs YOLOv5 detection inference on various sources like images, videos, directories, streams, etc."""
     source = str(source)
-    save_img = not nosave and not source.endswith(".txt")  # save inference images
+    save_img = not nosave # save inference images
     is_file = Path(source).suffix[1:] in (IMG_FORMATS + VID_FORMATS)
     is_url = source.lower().startswith(("rtsp://", "rtmp://", "http://", "https://"))
     webcam = source.isnumeric() or source.endswith(".streams") or (is_url and not is_file)
@@ -130,7 +131,7 @@ def run(
     elif screenshot:
         dataset = LoadScreenshots(source, img_size=imgsz, stride=stride, auto=pt)
     else:
-        dataset = LoadImages(source, img_size=imgsz, stride=stride, auto=pt, vid_stride=vid_stride)
+        dataset = LoadImages(source, img_size=imgsz, stride=stride, auto=pt, vid_stride=vid_stride, image_root=imgdir)
     vid_path, vid_writer = [None] * bs, [None] * bs
 
     # Run inference
@@ -295,6 +296,7 @@ def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument("--weights", nargs="+", type=str, default=ROOT / "best.pt", help="model path or triton URL")
     parser.add_argument("--source", type=str, default=ROOT / "data/images", help="file/dir/URL/glob/screen/0(webcam)")
+    parser.add_argument("--imgdir", type=str, default=ROOT / "data/images", help="iamge dir root")
     parser.add_argument("--data", type=str, default=ROOT / "data/coco128.yaml", help="(optional) dataset.yaml path")
     parser.add_argument("--imgsz", "--img", "--img-size", nargs="+", type=int, default=[640], help="inference size h,w")
     parser.add_argument("--conf-thres", type=float, default=0.25, help="confidence threshold")
